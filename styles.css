@@ -1,0 +1,244 @@
+/* ===========================
+   RESET + BASE
+=========================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "chaparral-pro", serif;
+  font-weight: 400;
+  font-style: normal;
+  background: #f9f9f9;
+  color: #1f1f1f;
+}
+
+/* ===========================
+   SIDEBAR FIXA (desktop)
+=========================== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150px;       /* largura da coluna */
+  height: 100vh;      /* ocupa toda a altura */
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  overflow-y: auto;
+}
+
+.sidebar h1,
+.sidebar p {
+  text-align: left;
+  font-size: small;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.sidebar a { color: inherit; text-decoration: none; }
+.sidebar a:hover { text-decoration: underline; }
+
+.sidebar img.logo {
+  max-width: 150px;
+  height: auto;
+  margin: 24px 0;
+}
+
+.sidebar .copyright {
+  margin-top: auto;          /* fixa no “rodapé” da coluna */
+  padding-top: 8px;
+  font-size: small;
+  opacity: .9;
+}
+
+/* ===========================
+   VÍDEO (desktop)
+=========================== */
+.video-wrap {
+  margin-left: 150px;         /* respeita a coluna */
+  width: calc(100% - 150px);
+  /* espaço depois do vídeo — ajuste a gosto */
+  margin-bottom: 500px;
+  position: relative;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 1500px;          /* limite opcional no desktop */
+  object-fit: contain;
+}
+
+/* ===========================
+   CONTEÚDO
+=========================== */
+.conteudo {
+  margin-left: 150px;         /* respeita a coluna */
+  width: calc(100% - 150px);
+  padding: 16px;
+}
+
+.project { margin-bottom: 2.25rem; }
+
+.project .subtitle {
+  font-size: 0.833rem;        /* ~small */
+  color: #1f1f1f;
+  margin: 1rem 0 0.35rem 0;
+}
+
+.project h3 {
+  font-size: clamp(0.833rem, 0.7rem + 0.3vw, 2rem);
+  color: #1f1f1f;
+  margin: 0 0 0.2rem 0;
+}
+
+.project p:not(.subtitle) {
+  font-size: 0.833rem;        /* ~small */
+  color: #1f1f1f;
+  margin-bottom: 500px;       /* mantém seu respiro largo no desktop */
+}
+
+/* ===========================
+   GALERIA (desktop)
+=========================== */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;                      /* sem espaçamento entre fotos */
+}
+
+.galeria img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+@media (max-width: 768px) {
+  /* VAR da “primeira dobra”: mostrar só a sidebar ao entrar */
+  :root { --intro-offset: 100vh; }
+  @supports (height: 100dvh) {
+    :root { --intro-offset: 100dvh; }
+  }
+
+  /* Sidebar fica ao fundo (conteúdo passa por cima) */
+  .sidebar {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;     /* evita toque na camada de baixo */
+    border-right: none;
+  }
+
+  /* Conteúdo acima da sidebar + respiro inicial */
+  .video-wrap,
+  .conteudo {
+    position: relative;
+    z-index: 1;
+    margin-left: 0;
+    width: 100%;
+    margin-top: var(--intro-offset);
+    padding: 0;
+  }
+
+  /* Viewport do vídeo ocupa a tela, sem overflow lateral */
+  .video-wrap {
+    height: 100vh;
+    overflow: hidden;
+  }
+  @supports (height: 100dvh) {
+    .video-wrap { height: 100dvh; }
+  }
+
+  /* Vídeo realmente vertical (90°), centralizado */
+  body { overflow-x: hidden; }
+  .video-wrap .video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) rotate(90deg);
+    object-fit: cover;
+    object-position: center;
+    width: auto;
+    height: 100vw;            /* base para cobertura após rotação */
+  }
+  @supports (height: 100dvh) {
+    .video-wrap .video {
+      min-width: 100dvh;
+      min-height: 100dvw;
+    }
+  }
+
+  /* Galeria vira carrossel por swipe: 1 foto por tela */
+  .galeria {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: none;
+  }
+  .galeria::-webkit-scrollbar { display: none; }
+
+  .galeria img {
+    scroll-snap-align: start;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    /* Para miniaturas uniformes (opcional):
+       aspect-ratio: 4 / 3;
+       object-fit: cover;
+    */
+  }
+
+  /* Tipografia mais compacta no mobile */
+  .project .subtitle { font-size: 0.8rem; }
+  .project h3 { font-size: clamp(1rem, 0.9rem + 1vw, 1.25rem); }
+  .project p:not(.subtitle) { font-size: 0.9rem; margin-bottom: 1rem; }
+
+  /* Fundo atrás dos textos (para não “misturar” com a sidebar no fundo) */
+  .conteudo .project .subtitle,
+  .conteudo .project h3,
+  .conteudo .project p:not(.subtitle) {
+    background: rgba(249, 249, 249);
+    display: inline-block;
+    max-width: 100%;
+    padding: 0.35rem 0.5rem;
+  }
+}
+
+/* ===== MOBILE: tipografia idêntica ao desktop ===== */
+@media (max-width: 768px) {
+  /* ordem já vem do HTML: subtitle -> h3 -> p
+     aqui só garantimos os MESMOS tamanhos e espaçamentos do desktop */
+  .project .subtitle {
+    font-size: 0.833rem;
+    margin: 1rem 0 0.35rem 0;
+  }
+
+  .project h3 {
+    font-size: clamp(0.833rem, 0.7rem + 0.3vw, 2rem);
+    margin: 0 0 0.2rem 0;
+  }
+
+  .project p:not(.subtitle) {
+    font-size: 0.833rem;
+    margin-bottom: 500px; /* igual ao desktop; ajuste se quiser menor */
+  }
+}
+
+
+
+
+
