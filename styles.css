@@ -235,6 +235,36 @@ body {
   }
 }
 
+/* ==== MOBILE: carrossel robusto (flex + snap estável) ==== */
+@media (max-width: 768px) {
+  .galeria {
+    display: flex;                 /* em vez de grid */
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 0;        /* garante snap no 1º item */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    align-items: stretch;
+  }
+  .galeria::-webkit-scrollbar { display: none; }
+
+  .galeria img {
+    flex: 0 0 100%;                /* cada slide ocupa 100% da largura */
+    min-width: 100%;               /* evita “encolher” ao carregar */
+    display: block;
+    width: 100%;
+    /* estabiliza a altura enquanto a imagem carrega */
+    aspect-ratio: 4 / 3;           /* ajuste se preferir 3/2, 16/9, 1/1... */
+    object-fit: contain;
+    margin: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;      /* impede pular vários slides */
+  }
+}
 
 
 
