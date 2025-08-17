@@ -32,8 +32,6 @@ body {
 .sidebar p {
   text-align: left;
   font-size: small;
-  line-height: 1.4;
-  margin-bottom: 6px;
 }
 
 .sidebar a { color: inherit; text-decoration: none; }
@@ -42,12 +40,11 @@ body {
 .sidebar img.logo {
   max-width: 150px;
   height: auto;
-  margin: 24px 0;
+  margin-top: 150px;
+  margin-bottom: 75px;
 }
-
 .sidebar .copyright {
   margin-top: auto;          /* fixa no “rodapé” da coluna */
-  padding-top: 8px;
   font-size: small;
   opacity: .9;
 }
@@ -237,6 +234,12 @@ body {
     margin-bottom: 500px; /* igual ao desktop; ajuste se quiser menor */
   }
 }
+
+
+
+
+
+
 
 
 
