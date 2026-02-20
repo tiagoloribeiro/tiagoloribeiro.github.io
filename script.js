@@ -143,10 +143,24 @@
   const v = document.querySelector(".video-wrap video");
   if (v) {
     try {
-      v.pause();
-      v.removeAttribute("autoplay");
-      v.removeAttribute("loop");
-      v.preload = "none";
+      v.setAttribute("playsinline", "");
+      v.setAttribute("muted", "");
+      v.setAttribute("autoplay", "");
+      v.setAttribute("loop", "");
+      v.muted = true;
+
+      const tryPlay = () => {
+        const playPromise = v.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      };
+
+      if (v.readyState >= 1) {
+        tryPlay();
+      } else {
+        v.addEventListener("loadedmetadata", tryPlay, { once: true });
+      }
     } catch (e) {}
   }
 })();
@@ -199,5 +213,6 @@
     setMode(mode);
   });
 })();
+
 
 
