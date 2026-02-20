@@ -28,10 +28,16 @@
 
   <!-- Vídeo (desktop normal / mobile em 90°) -->
   <div class="video-wrap" id="work-video">
-    <video class="video" autoplay muted loop playsinline>
-      <source src="images/Bobotobook-vertical.mp4" type="video/mp4" media="(max-width: 768px)" />
-      <source src="images/Bobotobook.mp4" type="video/mp4" />
-    </video>
+    <video
+      class="video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      data-src-mobile="images/Bobotobook-vertical.mp4"
+      data-src-desktop="images/Bobotobook.mp4"
+    ></video>
   </div>
 
   <!-- Conteúdo principal -->
@@ -155,19 +161,19 @@
     <div class="shop-grid">
       <article class="product-card">
         <h3>print A3</h3>
-        <p class="price">$ 00</p>
+        <p class="price">R$ 60</p>
         <a class="buy" href="#" target="_blank" rel="noopener">comprar</a>
       </article>
 
       <article class="product-card">
         <h3>zine (pdf)</h3>
-        <p class="price">$ 00</p>
+        <p class="price">R$ 25</p>
         <a class="buy" href="#" target="_blank" rel="noopener">comprar</a>
       </article>
 
       <article class="product-card">
         <h3>poster</h3>
-        <p class="price">$ 00</p>
+        <p class="price">R$ 80</p>
         <a class="buy" href="#" target="_blank" rel="noopener">comprar</a>
       </article>
 
@@ -184,3 +190,5 @@
   <script src="script.js" defer></script>
 </body>
 </html>
+
+
