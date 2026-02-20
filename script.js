@@ -1,3 +1,27 @@
+(() => {
+  const video = document.querySelector('.video-wrap .video');
+  if (!video) return;
+
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+  const setVideoSource = () => {
+    const nextSrc = mobileQuery.matches ? video.dataset.srcMobile : video.dataset.srcDesktop;
+    if (!nextSrc) return;
+    if (video.getAttribute('src') === nextSrc) return;
+
+    video.setAttribute('src', nextSrc);
+    video.load();
+  };
+
+  setVideoSource();
+
+  if (typeof mobileQuery.addEventListener === 'function') {
+    mobileQuery.addEventListener('change', setVideoSource);
+  } else if (typeof mobileQuery.addListener === 'function') {
+    mobileQuery.addListener(setVideoSource);
+  }
+})();
+
 /* ============================================================
    Scroll Hint (Seta de “arraste”) — versão insistente
    - Ao entrar na tela: espera 2s sem interação e mostra a seta
@@ -175,3 +199,5 @@
     setMode(mode);
   });
 })();
+
+
