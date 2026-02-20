@@ -3,9 +3,15 @@
   if (!video) return;
 
   const mobileQuery = window.matchMedia('(max-width: 768px)');
+  const ua = navigator.userAgent || '';
+  const isInstagram = ua.includes('Instagram');
+  const isFBWebView = ua.includes('FBAN') || ua.includes('FBAV');
+  const isWebView = isInstagram || isFBWebView;
 
   const setVideoSource = () => {
-    const nextSrc = mobileQuery.matches ? video.dataset.srcMobile : video.dataset.srcDesktop;
+    const nextSrc = isWebView
+      ? (video.dataset.srcWebview || video.dataset.srcMobile || video.dataset.srcDesktop)
+      : (mobileQuery.matches ? video.dataset.srcMobile : video.dataset.srcDesktop);
     if (!nextSrc) return;
     if (video.getAttribute('src') === nextSrc) return;
 
@@ -213,6 +219,8 @@
     setMode(mode);
   });
 })();
+
+
 
 
 
